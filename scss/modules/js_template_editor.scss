@@ -1,0 +1,392 @@
+$js_te_containerPadding: 5px;
+$js_te_blocksMargin: 40px;
+
+
+///*COLORS*///
+$js_te_color_menuBackground: #bebebe73;
+$js_te_color_menuBackgroundHover: #bebebed1;
+$js_te_color_menuItemHover: rgba(93, 87, 87, 0.9098039215686274);
+$js_te_color_blockToolbar: #1d1b1b;
+
+
+
+
+
+
+///*MENU*/// 
+$js_te_NumberOfMenuItems: 4;
+$js_te_menuTransitionDelay: 100;
+$js_te_menuHeight: 50px;
+$js_te_menuWidth: 500px;
+
+///*BLOCKS*///
+$js_te_blockMinHeight: 150px;
+$js_te_blockMaxHeight: 600px;
+
+///*BLOCK TOOLBAR*///
+$js_te_blockToolbarHeight: 30px;
+
+
+///*INNER MENU*///
+$js_te_innerMenuItemHeight: 50px;
+$js_te_innerMenuItemWidth: 50px;
+$js_te_innerMenuItemSpacing: 10px;
+
+
+
+#js_te_saveBtn,#js_te_viewBtn,{
+    float: right;
+    height: 100%;
+    padding: 4px 21px;
+//    @include transform(0.3s);
+    &.js_te_saved{
+        background-color: green;
+    }
+}
+
+#js_te {
+    width: 100%;
+    height: 100%;
+    padding: $js_te_containerPadding;
+    padding-top: $js_te_blocksMargin;
+
+
+
+    #js_te_menu {
+        position: relative;
+        height: $js_te_menuHeight;
+        background-color: $js_te_color_menuBackground;
+        margin-bottom: $js_te_blocksMargin;
+        text-align: center;
+        @include transition(0.3s);
+        @include no-select;
+
+        &:hover {
+            background-color: $js_te_color_menuBackgroundHover;
+
+            span {
+                opacity: 0;
+                @include transition(none);
+                visibility: hidden;
+            }
+
+            li {
+                top: 0;
+
+                @for $i from 1 through $js_te_NumberOfMenuItems {
+                    &:nth-child(#{$i}) {
+                        @include transitions(background-color 500ms, top 0.1s ease-in #{$i*$js_te_menuTransitionDelay}ms);
+                    }
+                }
+            }
+        }
+
+        span {
+            //Add new block btn
+            opacity: 1;
+            color: #FFF;
+            font-size: $size_bigger;
+            font-weight: 600;
+            @include center;
+            @include transition(opacity 600ms linear ($js_te_NumberOfMenuItems * $js_te_menuTransitionDelay *1ms));
+
+        }
+
+        ul {
+            //List with blocks buttons
+            display: inline-block;
+            width: $js_te_menuWidth;
+            overflow: hidden;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+        }
+
+
+        li {
+            position: relative;
+            width: (100/$js_te_NumberOfMenuItems)*1%;
+            height: 100%;
+            background-color: #2d2d2d;
+            float: left;
+            top: -$js_te_menuHeight;
+            cursor: pointer;
+            background-repeat: no-repeat;
+            background-position: center;
+
+            &:hover {
+                background-color: $js_te_color_menuItemHover;
+            }
+
+            &:not(:first-child) {
+                border-left: 2px solid brown;
+            }
+
+            @for $i from 1 through $js_te_NumberOfMenuItems {
+                &:nth-child(#{$i}) {
+                    $delay: #{($js_te_menuTransitionDelay * ($js_te_NumberOfMenuItems+1) -$i * $js_te_menuTransitionDelay)*1ms};
+                    @include transition(top 0.1s ease-in $delay);
+                }
+            }
+        }
+
+
+
+
+        #js_te_fwbBtn {
+            background-image: url(../../img/js_te/rectangle.png);
+            background-size: 40px;
+        }
+
+        #js_te_colBtn {
+            background-image: url(../../img/js_te/columns.png);
+            background-size: 30px;
+        }
+
+        #js_te_tabBtn {
+            background-image: url(../../img/js_te/tabs.png);
+            background-size: 30px;
+        }
+
+        #js_te_accBtn {
+            background-image: url(../../img/js_te/accordion.png);
+            background-size: 36px;
+        }
+    }
+
+
+
+    //***************BLOCKS****************//
+    #js_te_blocksPane {
+        //        min-height: 400px;
+
+    }
+
+
+    //General block
+    .js_te_block {
+        position: relative;
+        min-height: $js_te_blockMinHeight;
+        margin-bottom: $js_te_blocksMargin;
+        background-color: #b3a8a84d;
+        @include transition(background-color 300ms);
+
+        &.no_min_height {
+            min-height: 0;
+        }
+
+        &.bgrnd_white {
+            background-color: $white;
+        }
+
+
+
+        .js_te_block_toolbar {
+            position: absolute;
+            width: 100%;
+            height: $js_te_blockToolbarHeight;
+            background-color: $js_te_color_blockToolbar;
+            cursor: move;
+            visibility: hidden;
+            opacity: 0;
+            @include transitions (visibility 0s, opacity 0.2s linear);
+            @include translateY(-100%);
+            
+            
+            .js_te_toolbarBtn {
+                height: 100%;
+                width: 60px;
+                float: right;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: 20px;
+                  @include transition(none);
+                &:hover {
+                    background-color: #232222;
+                    border: none;
+                }
+            }
+
+            .js_te_btn_blockSettings {
+                background-image: url(../../img/js_te/settings.png);
+
+            }
+
+            .js_te_btn_rmblock {
+                background-image: url(../../img/js_te/close.png);
+            }
+        }
+
+        .js_te_blockInnerContainer {
+            min-height: $js_te_blockMinHeight;
+            // Image inside block
+            text-align: center;
+        .js_te_image {
+            
+            
+            }
+        }
+
+        .js_te_innerMenu {
+            display: inline-block;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            @include center;
+
+            li {
+                float: left;
+                height: $js_te_innerMenuItemHeight;
+                width: $js_te_innerMenuItemWidth;
+                margin: $js_te_innerMenuItemSpacing;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 35px;
+                border-radius: 5px;
+                cursor: pointer;
+                @include transition (300ms);
+
+                &:hover {
+                    @include scale (1.2, 1.2);
+                    background-color: $js_te_color_menuItemHover;
+                }
+            }
+
+            .js_te_txtBtn {
+                background-image: url(../../img/js_te/text.png);
+            }
+
+            .js_te_imgBtn {
+                background-image: url(../../img/js_te/image.png);
+            }
+
+            .js_te_videoBtn {
+                background-image: url(../../img/js_te/video.png);
+            }
+
+            .js_te_loaderBtn {
+                background-image: url(../../img/js_te/js_loader.png);
+            }
+        }
+
+        .js_te_settingsOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #d6dfdf;
+            z-index: 100;
+            .js_te_radioBtns{
+                
+            }
+        }
+
+
+    }
+
+
+
+    // Full wdth block
+    .js_te_fwb {
+
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //***************DRAGULA****************//
+
+    .gu-mirror {
+        //        position: fixed !important;
+        //        margin: 0 !important;
+        //        z-index: 9999 !important;
+        //        opacity: 0.8;
+        //        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+        //        filter: alpha(opacity=80);
+
+
+    }
+
+    .gu-hide {
+        display: none !important;
+    }
+
+    .gu-unselectable {
+        @include no-select();
+    }
+
+    .gu-transit {
+        opacity: 0.2;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+        filter: alpha(opacity=20);
+
+        outline: 2px dashed #ddd;
+    }
+
+
+
+    .js_te_resizableY {
+        resize: vertical;
+        overflow: auto;
+        max-height: $js_te_blockMaxHeight;
+    }
+
+}
+
+
+//Prevent blook toolbar appearing when doing drag-sort
+body:not(.gu-unselectable) {
+    .js_te_block:hover {
+        .js_te_block_toolbar {
+            visibility: visible!important;
+            opacity: 1 !important;
+        }
+    }
+}

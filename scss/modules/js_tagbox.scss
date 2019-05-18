@@ -1,0 +1,93 @@
+.js_tagbox {
+    display: block;
+    width: 100%;
+    .js_tb_wrapper {
+        .js_tb_searchWrapper {
+            position: relative;
+            input.js_tb_input {
+                width: 75%;
+                @include transition (0.3s);
+
+            }
+            button.js_tb_addBtn {
+                width: 25%;
+            }
+            ul.js_tb_resultsList {
+                position: absolute;
+                width: 80%;
+                margin: 0px;
+                padding: 0px;
+                list-style: inside square;
+                background-color: $color_main;
+                z-index: 10;
+                li {
+                    cursor: pointer;
+                    color: $white;
+                    padding: 10px;
+                    &:hover,
+                    &.js_tb_activeLi {
+                        background-color: $color_button;
+                    }
+                    &:not(:last-child) {
+                        border-bottom: 2px solid brown;
+
+                    }
+                }
+            }
+        }
+        .js_tb_tagPane {
+            min-height: 46.6px;
+            margin-top: 15px;
+            padding: 5px;
+            background-color: $white;
+            .js_tb_tag {
+                display: inline-block;
+               padding-left: 4px;
+                margin: 0px 5px 5px 0px;
+                background-color: $color_t_dark;
+//                border-radius: 5px;
+                color: $white;
+                font-size: $size_p;
+                @include no-select;
+
+
+                span.js_tb_removeTagBtn {
+                    border-left: 1px solid $white;
+                    margin-left: 5px;
+                    padding: 0px 4px;
+                    cursor: pointer;
+                    font-size: $size_bigger;
+
+                    &:after {
+                        content: "+";
+                        display: inline-block;
+
+                        @include rotate(45deg);
+                        @include transition (0.3s);
+                    }
+                    &:hover {
+                        &:after {
+                            color: brown;
+                        }
+                    }
+                }
+                &.js_tb_highlight {
+                    animation: js_tb_blinker 0.7s ease infinite;
+                    @include keyframes (js_tb_blinker) {
+                        50% {
+                            opacity: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.js_tb_success {}
+
+    &.js_tb_fail {
+        input.js_tb_input {
+            @include shadow (inset 0 0 10px brown);
+
+        }
+    }
+}

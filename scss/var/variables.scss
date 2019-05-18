@@ -1,0 +1,70 @@
+//https://css-tricks.com/snippets/php/
+
+/////////////////////////COLORS/////////////////////////////
+
+$color_p: #424242;
+$color_h: #252525;
+
+$black: #000000;
+$white: #FFFFFF;
+//$gray: #8c8c8c;
+$gray: #abaaaa;
+$grau: #4D5D53;
+
+
+$color_main: rgba(64, 58, 58, 0.75);
+
+
+
+/////////////BUTTONS////////////
+$color_button: #2d2d2d ; //#292a2e
+$color_button_hover:#232222; //
+$color_button_hover2: rgba(240, 240, 240, 0.1);
+$color_button_hover3: #555555;
+
+
+/////////////BORDER////////////
+$color_border: #645e5e; //#999
+$color_t_border: rgba(47, 56, 60, 0.22); //#999
+$color_border_active: brown;
+
+
+$color_t_dark: rgba(0, 0, 0, 0.8);
+
+$color_tag: rgba(0, 0, 0, 0.68);
+
+//////////////////////////FONTS/////////////////////////////
+$family_p: 'Open Sans', sans-serif;
+$family_h: 'Open Sans', sans-serif;
+
+$size_p: 16px;
+$size_bigger: 20px;
+$size_h1: 36px;
+$size_h2: 28px;
+$size_h3: 26px;
+$size_h4: 24px;
+$size_h5: 24px;
+$size_h6: 24px;
+
+
+//////////////////////////SPACES/////////////////////////////
+$margin_main_blocks: 20px 0px;
+$padding_main_side: 0px 15px;
+$padding_main_with_menu: 60px 15px;
+
+/////////////////////////MEDIAS/////////////////////////////
+//$mobile: 480px;
+//$tablet: 768px;
+//$desktop: 1200px;
+
+///BOOTSTRAP
+$mobile: 768px;
+$tablet: 992px;
+$desktop: 1200px;
+/////////////////////////OTHER/////////////////////////////
+$shadow_main: 0 2px 8px rgba(0, 0, 0, 0.5);
+///////////////////////////////////////////////////////////
+@import "functions";
+@import "global";
+
+

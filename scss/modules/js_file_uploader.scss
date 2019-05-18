@@ -1,0 +1,519 @@
+///*DIMENSIONES*///
+$js_fu_topPanelHeight: 60px;
+$js_fu_menuHeight: 30px;
+$js_fu_itemHeight: 150px;
+$js_fu_itemSpacing: 10px;
+
+
+
+///*COLORS*///
+//$js_fu_color_second:rgba(221, 221, 221, 0.92); //menu, details cotainer, active items
+$js_fu_color_first: #bebebe;
+$js_fu_color_second:#ddd; //menu, details cotainer, active items
+$js_fu_color_third: $color_button; //rgb(47, 56, 60); //top panel
+//$js_fu_color_fourth:rgba(68, 68, 68, 0.77); //items container
+$js_fu_color_fourth:#f1f1f1; //items container
+$js_fu_color_fifth: $color_t_border; // container borders
+$js_fu_color_sixth: $color_border; //#999; //table borders
+$js_fu_color_progressBar:#4CAF50;
+
+$js_fu_color_white: #FFFFFF;
+$js_fu_color_red: brown;
+
+///*FONTS*///
+$js_fu_fontcolor: #666;
+$js_fu_fontsize_table: 14px;
+
+
+
+
+
+
+#js_fu_container {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    z-index: 999;
+    @include no-select;
+    #js_fu_pane {
+        width: 100%;
+        height: 100%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        border-collapse: collapse;
+        #js_fu_topPanel {
+            height: $js_fu_topPanelHeight;
+            padding: 0;
+            background-color: $js_fu_color_third;
+            #js_fu_title {
+                display: inline-block;
+                height: 100%;
+                float: left;
+                line-height: $js_fu_topPanelHeight;
+                font-size: 1.4em;
+                color: $js_fu_color_white;
+                padding: 0px 30px
+            }
+            #js_fu_closeBtn {
+                display: inline-block;
+                float: right;
+                width: $js_fu_topPanelHeight;
+                height: 100%;
+                background-image: url("../img/js_fu/close.png");
+                background-position: center;
+                background-size: 70% 70%;
+                background-repeat: no-repeat;
+                background-color: $js_fu_color_red;
+                padding: 5px;
+                cursor: pointer;
+            }
+
+        }
+
+        #js_fu_menuPanel {
+            height: $js_fu_menuHeight;
+            padding: 2.5px 20px;
+            background-color: $js_fu_color_second;
+            text-align: center;
+            #js_fu_backBtn,
+            #js_fu_uploadBtn,
+            #js_fu_orderBtn,
+            .js_fu_orderOptn {
+                padding: 2.5px 15px;
+                height: $js_fu_menuHeight / 1.5;
+                font-size: $js_fu_fontsize_table;
+                text-align: center;
+            }
+
+            #js_fu_backBtn,
+            #js_fu_uploadBtn {
+                float: left;
+                border: none;
+            }
+
+
+            #js_fu_fileTabs {
+                display: inline-block;
+                height: $js_fu_menuHeight / 1.5;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                border-radius: 50px;
+                box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+                li {
+                    display: inline-block;
+                    height: 100%;
+                    padding: 2.5px 2px;
+                    margin: 0 2px;
+                    font-size: $js_fu_fontsize_table;
+                    cursor: pointer;
+                    &:first-child {
+                        border-top-left-radius: 50px;
+                        border-bottom-left-radius: 50px;
+
+                    }
+                    &:last-child {
+                        border-top-right-radius: 50px;
+                        border-bottom-right-radius: 50px;
+                    }
+                    &.active {
+                        background-color: $js_fu_color_third;
+                        color: $js_fu_color_white;
+                    }
+                }
+            }
+
+
+            #js_fu_order {
+                display: inline-block;
+                position: relative;
+                float: right;
+                margin: 0 20px;
+                #js_fu_orderBtn {
+                    width: 100px;
+                    background-color: $js_fu_color_fourth;
+                }
+
+
+                #js_fu_orderList {
+                    max-height: 0px;
+                    overflow: hidden;
+                    position: absolute;
+                    width: 100%;
+                    z-index: 100;
+                    @include transition(0.2s);
+                    .js_fu_orderOptn {
+                        cursor: pointer;
+                        color: $js_fu_color_white;
+                        background-color: $js_fu_color_first;
+                        &:hover {
+                            background-color: $js_fu_color_third;
+                        }
+                    }
+                }
+                &:hover #js_fu_orderList {
+                    max-height: 200px;
+                }
+            }
+
+
+
+            #js_fu_searchContainer {
+                display: inline-block;
+                position: relative;
+                float: right;
+                #js_fu_search {
+                    height: $js_fu_menuHeight / 1.5;
+                    border-radius: 50px;
+                    max-width: 170px;
+                }
+                #js_fu_searchBtn {
+                    display: inline-block;
+                    position: absolute;
+                    right: 0px;
+                    width: 30px;
+                    height: 100%;
+                    border-radius: 50px;
+                    background: url("../img/js_fu/search.png");
+                    background-position: center;
+                    background-size: 10px;
+                    background-repeat: no-repeat;
+                    background-color: $js_fu_color_white;
+                    &.active {
+                        background: url("../img/js_fu/cancel.png");
+                        background-position: center;
+                        background-size: 10px;
+                        background-repeat: no-repeat;
+                        background-color: $js_fu_color_white;
+                        cursor: pointer;
+                    }
+
+                }
+
+            }
+
+
+        }
+        #js_fu_mainPane {
+            padding: 0;
+            #js_fu_itemContainer {
+                position: relative;
+                height: 100%;
+                background-color: $js_fu_color_fourth;
+                box-shadow: inset 0 4px 4px -4px rgba(0, 0, 0, .1);
+                padding: $js_fu_itemSpacing;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                @include scrollbar (11px,
+                $js_fu_color_third);
+                &.js_fu_empty {
+                    .js_fu_emptyMsg {
+                        margin: 0;
+                        @include center;
+                    }
+                }
+
+                .js_fu_item {
+                    height: $js_fu_itemHeight;
+                    padding: $js_fu_itemSpacing;
+                    overflow: hidden;
+                    text-align: center;
+                    cursor: pointer;
+                    .vertical-centre-helper + img {
+                        max-height: 100%;
+                        max-width: 100%;
+                        height: auto;
+                        width: auto;
+                    }
+
+                    .fu-prog-bar-container {
+                        position: absolute;
+                        top: 50%;
+                        left: $js_fu_itemSpacing;
+                        height: 30px;
+                        width: 90%;
+                        margin-top: -15px;
+                        .fu-progress-bar {
+                            width: 10%;
+                            height: 30px;
+                            background-color: $js_fu_color_progressBar;
+                            text-align: center;
+                            line-height: 30px;
+                            color: $js_fu_color_white;
+                        }
+                    }
+
+
+
+                    .js_fu_thumbWrapper {
+                        img {
+                            height: 100%;
+                            vertical-align: middle;
+                            @include no-drag;
+                        }
+                    }
+
+
+                    &.js_fu_imageItem {
+                        .js_fu_thumbWrapper {
+                            img {
+                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+                            }
+                        }
+                    }
+
+                    &.js_fu_videoItem {
+                        .js_fu_thumbWrapper {
+                            &:before {
+                                content: url(../img/js_fu/play.png);
+                                display: inline-block;
+                                @include center;
+                            }
+                        }
+                    }
+                    &.js_fu_documentItem {
+                        .js_fu_thumbWrapper {
+                            background-color: $js_fu_color_white;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                            img {
+                                height: auto;
+                            }
+                        }
+
+                    }
+
+                    &.js_fu_itemWithError {
+                        .js_fu_thumbWrapper {
+                            filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(600%) contrast(0.8);
+                        }
+                    }
+
+                    &.js_fu_selectedItem {
+                        background-color: $color_p;
+                    }
+                }
+            }
+        }
+        #js_fu_detailContainer {
+            position: relative;
+            width: 25%;
+            padding: $js_fu_itemSpacing;
+            background-color: $js_fu_color_second;
+            box-shadow: inset 0px 0px 76px -18px rgba(0, 0, 0, 0.6);
+            vertical-align: top;
+            .js_fu_itemDetails {
+                height: 93%;
+                overflow-x: hidden;
+                overflow-y: auto;
+                @include scrollbar (11px,
+                $js_fu_color_third);
+                .js_fu_itemPreview {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    border: 1px dotted $color_p;
+                    padding: 5px;
+                    img {
+                        max-width: 100%;
+                        max-height: 180px;
+                    }
+                }
+                table {
+                    width: 100%;
+                    font-size: $js_fu_fontsize_table;
+                    color: $js_fu_fontcolor;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
+                    border-top: 2px solid $color_button;
+                    border-bottom: 2px solid $color_button;
+                    th,
+                    td {
+                        padding: 4px 5px;
+                    }
+                    td {
+                        word-break: break-all;
+                        &.js_fu_editableField {
+                            input {
+                                background: none;
+                                font-size: $js_fu_fontsize_table;
+                                width: 100%;
+                                padding: 0px;
+                            }
+                        }
+                    }
+
+                    &.js_fu_infoTable {
+                        tr {
+                            th {
+                                text-align: left;
+                                border-right: 1px solid $js_fu_color_sixth;
+                            }
+                            &:not(:last-child) {
+                                th,
+                                td {
+                                    border-bottom: 1px solid $js_fu_color_sixth;
+                                }
+                            }
+                        }
+                    }
+                    &.js_fu_comparison {
+                        table-layout: fixed;
+                        tr {
+                            th {
+                                .left,
+                                .right {
+                                    width: 50%;
+                                    text-align: center;
+                                }
+                            }
+                            td {
+                                text-align: center;
+                                img {
+                                    width: 48%;
+                                    @include no-drag;
+                                }
+                            }
+                            &:nth-child(n + 3):not(:last-child) {
+                                th,
+                                td {
+                                    border-bottom: 1px solid $js_fu_color_sixth;
+                                }
+                            }
+                            &:nth-child(2) {
+                                td {
+                                    padding: 4px 0px 15px 0px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                #js_fu_fileManagementBox {
+
+                    .js_fu_downloadFileBtn,
+                    .js_fu_deleteFileBtn {
+                        height: 27px;
+                        line-height: 27px;
+                        text-align: center;
+                        width: 120px;
+                        padding: 0;
+                        font-size: $js_fu_fontsize_table;
+                        background-repeat: no-repeat;
+                        background-position: 10px;
+                        border: none;
+                        background-size: $js_fu_fontsize_table ($js_fu_fontsize_table - 2px);
+                    }
+                    .js_fu_downloadFileBtn {
+                        margin-right: 10px;
+
+                        color: $js_fu_color_white;
+                        background-image: url(../img/js_fu/download.png);
+                    }
+                    .js_fu_deleteFileBtn {
+                        background-color: $js_fu_color_red;
+                        background-image: url(../img/js_fu/delete.png);
+                        &:hover {
+                            background-color: darken($js_fu_color_red, 15);
+                        }
+                    }
+                }
+
+                .js_fu_textarea {
+                    margin: 20px 0px;
+                    padding: 5px;
+                    font-family: $family_p;
+                    font-size: $js_fu_fontsize_table;
+                    color: $gray;
+                } ////////////////TAGBOX//////////////
+                .js_tagbox {
+                    ul.js_tb_resultsList {
+                        width: 70%;
+                        list-style: none;
+                        background-color: $color_t_dark;
+
+                        li {
+                            padding: 2px 5px;
+                            &:hover,
+                            &.js_tb_activeLi {
+                                background-color: $grau;
+                            }
+                            &:not(:last-child) {
+                                border-bottom: 1px solid brown;
+                            }
+                        }
+                    }
+
+                    input.js_tb_input {
+                        width: 70%;
+                        padding: 2px 5px;
+                        font-family: $family_p;
+                        font-size: $js_fu_fontsize_table;
+                        color: $gray;
+                    }
+                    button.js_tb_addBtn {
+                        width: 30%;
+                        padding: 2px 0px;
+                        font-size: $js_fu_fontsize_table;
+                        border: none;
+                    }
+                    .js_tb_tagPane {
+                        margin: 5px 0px;
+                        padding: 0px;
+                        background: none;
+                        .js_tb_tag {
+                            background-color: $color_tag;
+                            font-size: $js_fu_fontsize_table;
+                        }
+                    }
+                }
+
+
+
+
+
+            }
+
+            #js_fu_errorOptionsBox {
+                button {
+                    width: 33%;
+                    font-size: $js_fu_fontsize_table;
+                    padding: 7px 10px;
+                }
+
+            }
+
+            #js_fu_selectBtn {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 7%;
+                border-top: 1px solid $js_fu_color_fifth;
+                border-bottom: none;
+                border-left: none;
+                border-right: none;
+
+
+            }
+
+
+        } //        }
+    }
+}
+
+
+
+
+//.hoverMessage {
+//    position: absolute;
+//    top: 100%;
+//    width: 200%;
+//    height: 100%;
+//    text-align: center;
+//    background: #f1f1f1ad;
+//    transition: 0.3s;
+//    left: 0px;
+//    z-index: 99
+//}

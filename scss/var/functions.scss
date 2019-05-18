@@ -1,0 +1,424 @@
+@mixin browser($thething, $dothis, $important: null) {
+    @if ($important !=null) {
+        $important: "!important";
+    }
+
+    -webkit-#{$thething}: #{$dothis} #{$important};
+    -moz-#{$thething}: #{$dothis} #{$important};
+    -ms-#{$thething}: #{$dothis} #{$important};
+    -o-#{$thething}: #{$dothis} #{$important};
+    #{$thething}: #{$dothis} #{$important};
+}
+
+
+
+@mixin radius($radius, $important: null) {
+    @include browser(border-radius, $radius, $important);
+}
+
+@mixin shadow($shadow, $important: null) {
+    @include browser(box-shadow, $shadow, $important);
+}
+
+@mixin transition($args, $important: null) {
+    @include browser(transition, $args, $important);
+}
+
+@mixin transitions($args...) {
+    //Multiple transitions on element
+    @include browser(transition, $args);
+}
+
+@mixin translate ($x, $y, $important: null) {
+    @include browser(transform, translate($x, $y), $important);
+}
+
+@mixin translateX ($x, $important: null) {
+    @include browser(transform, translateX($x), $important);
+}
+
+@mixin translateY ($y, $important: null) {
+    @include browser(transform, translateY($y), $important);
+}
+
+@mixin rotate ($deg, $important: null) {
+    @include browser(transform, rotate($deg), $important);
+}
+
+@mixin scale ($x, $y, $important: null) {
+    @include browser(transform, scale($x, $y), $important);
+}
+
+@mixin filter($args, $important: null) {
+    @include browser(filter, $args, $important);
+}
+
+
+
+
+@mixin anchor {
+
+    a,
+    a:link,
+    a:visited,
+    a:hover,
+    a:active {
+        color: #333333;
+        text-decoration: none;
+    }
+}
+
+
+@mixin no-select ($important: null) {
+    -webkit-touch-callout: none;
+    @include browser(user-select, none, $important);
+}
+
+@mixin no-drag ($important: null) {
+    -khtml-user-drag: none;
+    @include browser(user-drag, none, $important);
+}
+
+/////////////////////////MEDIA/////////////////////////////
+$media_queries: true;
+$make_media_em_to_px: false;
+$printing: false;
+
+@mixin min-media($min-width, $only-content: null, $ignore: null) {
+    @if ($make_media_em_to_px==true) {
+        $min-width: px($min-width);
+    }
+
+    @if ($printing==true) {
+        $min-width: $min-width - 250px;
+    }
+
+    @if ($media_queries==true and $only-content==null and $ignore==null) {
+        @media screen and (min-width: $min-width) {
+            @content;
+        }
+    }
+
+    @elseif ($only-content !=null and $ignore==null) {
+        @content;
+    }
+
+    @elseif ($ignore==null) {
+        @content;
+    }
+}
+
+@mixin max-media($max-width, $only-content: null, $ignore: null) {
+    @if ($make_media_em_to_px==true) {
+        $max-width: px($max-width);
+    }
+
+    @if ($printing==true) {
+        $max-width: $max-width + 250px;
+    }
+
+    @if ($media_queries==true and $only-content==null and $ignore==null) {
+
+        @media screen and (max-width: $max-width) {
+            @content;
+        }
+    }
+
+    @elseif ($only-content !=null and $ignore==null) {
+        // @else {
+        @content;
+    }
+}
+
+// media is to set a min and max media
+@mixin media($min-width, $max-width: null, $ignore: null) {
+    @if ($printing==true) {
+        $min-width: $min-width - 250px;
+        $max-width: $max-width + 250px;
+    }
+
+    @if ($make_media_em_to_px==true) {
+        $min-width: px($min-width);
+        $max-width: px($max-width);
+    }
+
+    @if ($max-width < $min-width) {
+        $min-width_switch: $min-width;
+        $min-width: $max-width;
+        $max-width: $min-width_switch;
+    }
+
+    @if ($media_queries==true and $ignore==null) {
+        @media screen and (min-width: $min-width) {
+            @if $max-width {
+                @media (max-width: $max-width) {
+                    @content;
+                }
+            }
+
+            @else {
+                @content;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////VERTICAL CENTERING/////////////////////////////
+/// Works for block elements with unknown height
+/// Set position: relative to the parent before use
+@mixin cv {
+    position: absolute;
+    top: 50%;
+    @include translate (0, -50%);
+}
+
+/// Works for inline elements 
+/// Set height to the elemt before use
+/// Set this to the parent elemnt if you want to center a block element inside of it
+@mixin cv2 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/// Works for block elements 
+/// Set height to the element before use
+/// Set position: relative to the parent before use
+@mixin cv3 {
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+}
+
+
+
+
+// You could also do this:
+// parant {display: table;}
+// child {display: table-cell; vertical-align: middle;}
+/////////////////////HORIZONTAL AND VERTICAL CENTER/////////////////////
+/// Works for elements with known height and width
+/// Set position: relative to the parent before use
+@mixin center2 ($height, $width, $padding: null) {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    @if ($padding !=null) {
+        $margin-top: (($height +($padding * 2)) / 2) * -1px;
+        $margin-right: (($width +($padding * 2)) / 2) * -1px;
+    }
+
+    @else {
+        $margin-top: ($height / 2) * -1px;
+        $margin-right: ($width / 2) * -1px;
+    }
+
+    margin: $margin-top,
+    0px,
+    0px,
+    $margin-right;
+}
+
+
+
+@mixin center ($horizontal: true, $vertical: true) {
+    position: absolute;
+
+    @if ($horizontal and $vertical) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    @else if ($horizontal) {
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    @else if ($vertical) {
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+}
+
+/// Set this to the parent elemnt if you want to center an element inside of it
+@mixin center3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+// You could also do this:
+// parant {display: grid;}
+// child {margin: auto;}
+@mixin scrollbar($size, $color, $background-color: mix($color, white, 50%)) {
+    &::-webkit-scrollbar {
+        width: $size;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        height: 6px;
+        border: $size / 3.5 solid rgba(0, 0, 0, 0);
+        background-clip: padding-box;
+        border-radius: $size / 2;
+        background-color: $color;
+        box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+    }
+
+    scrollbar-face-color: $color;
+    scrollbar-track-color: $background-color;
+}
+
+
+
+@mixin aspect-ratio($width, $height) {
+    position: relative;
+
+    &:before {
+        display: block;
+        content: "";
+        width: 100%;
+        padding-top: ($height / $width) * 100%;
+    }
+
+    > .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+
+/// We use this for creating scalable elements (usually images / background images) that maintain a ratio.
+@mixin aspect-ratio2 ($x, $y, $pseudo: false) {
+    $padding: unquote(($y / $x) * 100 + '%');
+
+    @if $pseudo {
+        &:before {
+            @include pseudo($pos: relative);
+            width: 100%;
+            padding-top: $padding;
+        }
+    }
+
+    @else {
+        padding-top: $padding;
+    }
+}
+
+
+/// Gives a card depth effect.
+/// @param {Number} $depth - depth level (between 1 and 5)
+/// @link https://css-tricks.com/snippets/sass/material-shadows-mixin/
+/// @requires {function} top-shadow
+/// @requires {function} bottom-shadow
+@mixin card($depth) {
+    @if $depth < 1 {
+        box-shadow: none;
+    }
+
+    @else if $depth > 5 {
+        @warn "Invalid $depth `#{$depth}` for mixin `card`.";
+    }
+
+    @else {
+        box-shadow: bottom-shadow($depth), top-shadow($depth);
+    }
+}
+
+/// Computes a top-shadow for a card effect.
+/// @param {Number} $depth - depth level
+/// @return {List}
+@function top-shadow($depth) {
+    $primary-offset: nth(1.5 3 10 14 19, $depth) * 1px;
+    $blur: nth(1.5 3 10 14 19, $depth) * 4px;
+    $color: rgba(black, nth(.12 .16 .19 .25 .30, $depth));
+
+    @return 0 $primary-offset $blur $color;
+}
+
+/// Computes a bottom-shadow for a card effect.
+/// @param {Number} $depth - depth level
+/// @return {List}
+@function bottom-shadow($depth) {
+    $primary-offset: nth(1.5 3 6 10 15, $depth) * 1px;
+    $blur: nth(1 3 3 5 6, $depth) * 4px;
+    $color: rgba(black, nth(.24 .23 .23 .22 .22, $depth));
+
+    @return 0 $primary-offset $blur $color;
+}
+
+
+
+
+
+/// Usage
+/// @include keyframes(fade-out) {
+///      0% { opacity: 1; }
+///      90% { opacity: 0; }
+/// }
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }
+
+    @-ms-keyframes #{$animation-name} {
+        @content;
+    }
+
+    @-o-keyframes #{$animation-name} {
+        @content;
+    }
+
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}
+
+
+
+@mixin background-gradient($start-color, $end-color, $orientation) {
+    background: $start-color;
+
+    @if $orientation=='vertical' {
+        background: -webkit-linear-gradient(top, $start-color, $end-color);
+        background: linear-gradient(to bottom, $start-color, $end-color);
+    }
+
+    @else if $orientation=='horizontal' {
+        background: -webkit-linear-gradient(left, $start-color, $end-color);
+        background: linear-gradient(to right, $start-color, $end-color);
+    }
+
+    @else {
+        background: -webkit-radial-gradient(center, ellipse cover, $start-color, $end-color);
+        background: radial-gradient(ellipse at center, $start-color, $end-color);
+    }
+}
+
+
+@mixin truncate($truncation-boundary) {
+    max-width: $truncation-boundary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
